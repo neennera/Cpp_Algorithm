@@ -28,6 +28,14 @@ ll f(ll pos,ll l, ll r, ll ql,ll qr){
     return f(child,l,k,ql,qr) + f(child+1,k+1,r,ql,qr);
 }
 
+ll update(ll id, ll k){
+    seg[id]=k;
+    for(ll i=id>>1;i>=1;i/=2){
+        seg[i]=seg[2*i]+seg[(2*i)+1];
+    }
+    return 0;
+}
+
 int main(){
     ios_base::sync_with_stdio(0), cin.tie(0);
     cin >> n >> Q;
@@ -44,8 +52,20 @@ int main(){
     }
 
     //pf();
+    int op;
     while(Q--){
-        cin >> ql >> qr;
-        cout << f(1,0,(N/2)-1,ql-1,qr-1) << "\n";
+        cin >> op;
+        //cout << op << "--- ";
+        if(op==2){
+            cin >> ql >> qr;
+            cout << f(1,0,(N/2)-1,ql-1,qr-1) << "\n";
+        }else{
+            cin >> id >> k;
+            update((N/2)+(id-1),k);
+            //cout << "updated\n";
+            //pf();
+        }
+        
     }
 }
+
